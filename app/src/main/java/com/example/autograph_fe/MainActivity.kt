@@ -4,27 +4,34 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.autograph_fe.ui.theme.AutographfeTheme
+import com.example.autograph_fe.ui.screens.welcome.WelcomeScreen
+import com.example.autograph_fe.ui.theme.AutographTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AutographfeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+            val systemDark = isSystemInDarkTheme()
+            var isDark by rememberSaveable { mutableStateOf(systemDark) }
+
+            AutographTheme(darkTheme = isDark) {
+                WelcomeScreen(
+                    isDarkTheme = isDark,
+                    onToggleTheme = { isDark = !isDark },
+                    onCreateAccount = { /* navigate later */ },
+                    onLogIn = { },
+                    onContinueAsGuest = { },
+                )
             }
         }
     }
@@ -41,7 +48,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    AutographfeTheme {
+    AutographTheme {
         Greeting("Android")
     }
 }

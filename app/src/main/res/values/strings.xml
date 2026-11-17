@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">autograph-fe</string>
+    <string name="app_name">Autograph</string>
+    <string name="switch_to_dark_mode">Switch to dark mode</string>
+    <string name="switch_to_light_mode">Switch to light mode</string>
+    <string name="welcome_title">Make space for\nwhat matters.</string>
+    <string name="welcome_subtitle">Thoughts, sketches, and ideas — all in one quiet place.</string>
+    <string name="create_account">Create account</string>
+    <string name="log_in">Log in</string>
+    <string name="continue_as_guest">Continue as guest</string>
 </resources>
