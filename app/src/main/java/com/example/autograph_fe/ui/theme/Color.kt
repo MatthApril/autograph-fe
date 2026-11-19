@@ -14,4 +14,11 @@ val NightLine    = Color(0xFF2E3137)
 val Moon         = Color(0xFFE8E9EC)
 val MoonMuted    = Color(0xFF9A9CA3)
 val IndigoLight  = Color(0xFF8C9BFF)
-val Amber = Color(0xFFF0B54A)
+
+val IndigoDeep = Color(0xFF3849B9)   // links, light
+val IndigoSoft = Color(0xFFAAB5FF)   // links, dark
+val Green      = Color(0xFF3A9D6E)   // success, light
+val GreenLight = Color(0xFF65BC8F)   // success, dark
+val Amber      = Color(0xFFF2B84B)   // accent dots and pencil icon
+val HaloLight  = Color(0xFFE8EBFF)   // onboarding halo, light
+val HaloDark   = Color(0xFF303754)   // onboarding halo, dark

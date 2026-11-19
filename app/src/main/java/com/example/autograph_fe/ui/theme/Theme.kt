@@ -1,14 +1,14 @@
 package com.example.autograph_fe.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 private val LightColors = lightColorScheme(
@@ -27,14 +27,42 @@ private val DarkColors = darkColorScheme(
     outline = NightLine,
 )
 
+@Immutable
+data class AutographExtraColors(
+    val link: Color,
+    val success: Color,
+    val accent: Color,
+    val halo: Color,
+)
+
+private val LightExtraColors = AutographExtraColors(
+    link = IndigoDeep, success = Green, accent = Amber, halo = HaloLight,
+)
+private val DarkExtraColors = AutographExtraColors(
+    link = IndigoSoft, success = GreenLight, accent = Amber, halo = HaloDark,
+)
+
+private val LocalExtraColors = staticCompositionLocalOf { LightExtraColors }
+
 @Composable
 fun AutographTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    MaterialTheme(
-        colorScheme = if (darkTheme) DarkColors else LightColors,
-        typography = AutographTypography,
-        content = content,
-    )
+    CompositionLocalProvider(
+        LocalExtraColors provides if (darkTheme) DarkExtraColors else LightExtraColors,
+    ) {
+        MaterialTheme(
+            colorScheme = if (darkTheme) DarkColors else LightColors,
+            typography = AutographTypography,
+            content = content,
+        )
+    }
+}
+
+/** Read extra colors anywhere: AutographTheme.extraColors.link */
+object AutographTheme {
+    val extraColors: AutographExtraColors
+        @Composable @ReadOnlyComposable
+        get() = LocalExtraColors.current
 }
