@@ -1,6 +1,7 @@
 package com.example.autograph_fe.ui.screens.welcome
 
 import android.content.res.Configuration
+import android.credentials.CredentialManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme

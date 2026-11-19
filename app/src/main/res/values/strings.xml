@@ -7,4 +7,8 @@
     <string name="create_account">Create account</string>
     <string name="log_in">Log in</string>
     <string name="continue_as_guest">Continue as guest</string>
+
+    <!-- Auth -->
+    <string name="google_web_client_id">277378609914-8dppc624ltoc1ijt401nunhfugpirtar.apps.googleusercontent.com</string>
+    <string name="api_base_url">http://10.10.3.84:3000/api</string>
 </resources>
