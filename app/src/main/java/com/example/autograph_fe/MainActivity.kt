@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,9 +17,12 @@ import com.example.autograph_fe.ui.auth.GoogleAuthManager
 import com.example.autograph_fe.ui.screens.welcome.WelcomeScreen
 import com.example.autograph_fe.ui.theme.AutographTheme
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.autograph_fe.ui.navigation.AutographNavHost
 
 class MainActivity : ComponentActivity() {
 
+    private val appViewModel: AppViewModel by viewModels { AppViewModel.Factory }
     private lateinit var googleAuthManager: GoogleAuthManager
 
     private fun loginWithGoogle() {
@@ -48,15 +52,15 @@ class MainActivity : ComponentActivity() {
         googleAuthManager = GoogleAuthManager(this)
 
         setContent {
-            val systemDark = isSystemInDarkTheme()
-            var isDark by rememberSaveable {
-                mutableStateOf(systemDark)
-            }
+            val savedDarkTheme by appViewModel.darkTheme.collectAsStateWithLifecycle()
+            val hasSeenOnboarding by appViewModel.hasSeenOnboarding.collectAsStateWithLifecycle()
+            val isDark = savedDarkTheme ?: isSystemInDarkTheme()   // no choice saved yet: follow the phone
 
             AutographTheme(darkTheme = isDark) {
-                WelcomeScreen(
+                AutographNavHost(
+                    hasSeenOnboarding = hasSeenOnboarding,
                     isDarkTheme = isDark,
-                    onToggleTheme = { isDark = !isDark },
+                    onToggleTheme = { appViewModel.setDarkTheme(!isDark) },
                     onCreateAccount = { loginWithGoogle() },
                     onLogIn = { },
                     onContinueAsGuest = { },

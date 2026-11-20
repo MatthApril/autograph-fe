@@ -11,4 +11,59 @@
     <!-- Auth -->
     <string name="google_web_client_id">277378609914-8dppc624ltoc1ijt401nunhfugpirtar.apps.googleusercontent.com</string>
     <string name="api_base_url">http://10.10.3.84:3000/api</string>
+    <string name="onboarding_1_eyebrow">Capture</string>
+    <string name="onboarding_1_title">Every thought,\nin one place</string>
+    <string name="onboarding_1_body">Write, sketch, and dictate on one continuous page. Autograph keeps every idea together.</string>
+    <string name="onboarding_2_eyebrow">Create</string>
+    <string name="onboarding_2_title">Type and draw\non one page</string>
+    <string name="onboarding_2_body">Type and draw anywhere on the same page. Your ink stays anchored when the text moves.</string>
+    <string name="onboarding_3_eyebrow">Touch</string>
+    <string name="onboarding_3_title">Made for\nyour fingers</string>
+    <string name="onboarding_3_body">Draw with one finger. Scroll with two. Switch modes anytime to keep every gesture intentional.</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="start_writing">Start writing</string>
+    <string name="skip">Skip</string>
+    <string name="page_indicator">Page %1$d of %2$d</string>
+
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="error_name_required">Enter your name</string>
+    <string name="error_email_required">Enter your email</string>
+    <string name="error_email_invalid">Enter a valid email address</string>
+    <string name="error_password_required">Enter your password</string>
+    <string name="error_password_short">Use at least 8 characters</string>
+    <string name="error_password_mismatch">Passwords don\'t match</string>
+
+    <string name="placeholder_name">Your name</string>
+    <string name="placeholder_email">you@example.com</string>
+    <string name="placeholder_password">Your password</string>
+    <string name="placeholder_new_password">At least 8 characters</string>
+    <string name="placeholder_confirm_password">Repeat your password</string>
+
+    <string name="back">Back</string>
+    <string name="register_top_title">Create your account</string>
+    <string name="register_title">Welcome to Autograph</string>
+    <string name="register_subtitle">A calmer home for your thinking.</string>
+    <string name="login_top_title">Log in</string>
+    <string name="login_title">Welcome back</string>
+    <string name="login_subtitle">Your notes are right where you left them.</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="or">or</string>
+    <string name="or_continue_with">or continue with</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="have_account_prompt">Already have an account?</string>
+    <string name="new_here_prompt">New to Autograph?</string>
+    <string name="terms_prefix">"I agree to the "</string>
+    <string name="terms">Terms</string>
+    <string name="terms_and">" and "</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="error_terms">Please accept the Terms to continue</string>
+    <string name="strength_weak">Weak</string>
+    <string name="strength_good">Good</string>
+    <string name="strength_strong">Strong</string>
 </resources>
