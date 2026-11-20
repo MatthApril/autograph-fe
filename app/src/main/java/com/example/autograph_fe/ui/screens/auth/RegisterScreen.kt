@@ -1,5 +1,6 @@
 package com.example.autograph_fe.ui.screens.auth
 
+import android.app.Activity
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -17,7 +18,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -27,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.autograph_fe.R
+import com.example.autograph_fe.ui.auth.GoogleAuthManager
 import com.example.autograph_fe.ui.components.AutographButton
 import com.example.autograph_fe.ui.components.AutographTextField
 import com.example.autograph_fe.ui.components.FormErrorBanner
@@ -42,6 +46,12 @@ fun RegisterRoute(
     viewModel: RegisterViewModel = viewModel(factory = RegisterViewModel.Factory),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val googleAuthManager = remember(context) {
+        GoogleAuthManager(context as Activity)
+    }
+
+    val webClientId = stringResource(R.string.google_web_client_id)
 
     RegisterScreen(
         uiState = uiState,
@@ -53,6 +63,13 @@ fun RegisterRoute(
         onConfirmPasswordChange = viewModel::onConfirmPasswordChange,
         onAcceptedTermsChange = viewModel::onAcceptedTermsChange,
         onRegisterClick = { viewModel.register(onSuccess = onRegistered) },
+        onGoogleClick = {
+            viewModel.signInWithGoogle(
+                googleAuthManager = googleAuthManager,
+                webClientId = webClientId,
+                onSuccess = onRegistered
+            )
+        },
         onBack = onBack,
         onLogIn = onLogIn,
     )

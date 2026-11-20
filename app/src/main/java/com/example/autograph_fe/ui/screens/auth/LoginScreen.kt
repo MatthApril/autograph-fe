@@ -1,5 +1,6 @@
 package com.example.autograph_fe.ui.screens.auth
 
+import android.app.Activity
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -27,10 +28,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.autograph_fe.R
+import com.example.autograph_fe.ui.auth.GoogleAuthManager
 import com.example.autograph_fe.ui.components.AutographButton
 import com.example.autograph_fe.ui.components.AutographTextField
 import com.example.autograph_fe.ui.components.FormErrorBanner
 import com.example.autograph_fe.ui.theme.AutographTheme
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.remember
 
 @Composable
 fun LoginRoute(
@@ -39,9 +43,18 @@ fun LoginRoute(
     onLoggedIn: () -> Unit,
     onBack: () -> Unit,
     onCreateAccount: () -> Unit,
-    viewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
+    viewModel: LoginViewModel = viewModel(
+        factory = LoginViewModel.Factory
+    ),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val context = LocalContext.current
+    val googleAuthManager = remember(context) {
+        GoogleAuthManager(context as Activity)
+    }
+
+    val webClientId = stringResource(R.string.google_web_client_id)
 
     LoginScreen(
         uiState = uiState,
@@ -49,10 +62,18 @@ fun LoginRoute(
         onToggleTheme = onToggleTheme,
         onEmailChange = viewModel::onEmailChange,
         onPasswordChange = viewModel::onPasswordChange,
-        onLogInClick = { viewModel.logIn(onSuccess = onLoggedIn) },
+        onLogInClick = {
+            viewModel.logIn(onSuccess = onLoggedIn)
+        },
+        onGoogleClick = {
+            viewModel.signInWithGoogle(
+                googleAuthManager = googleAuthManager,
+                webClientId = webClientId,
+                onSuccess = onLoggedIn
+            )
+        },
         onBack = onBack,
         onCreateAccount = onCreateAccount,
-        // Forgot password and social sign-in get wired up with the real backend
     )
 }
 

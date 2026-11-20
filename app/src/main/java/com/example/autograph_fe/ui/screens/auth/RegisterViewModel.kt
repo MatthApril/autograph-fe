@@ -1,5 +1,6 @@
 package com.example.autograph_fe.ui.screens.auth
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -7,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.autograph_fe.AutographApp
+import com.example.autograph_fe.data.remote.ApiService
 import com.example.autograph_fe.data.repository.AuthRepository
+import com.example.autograph_fe.ui.auth.GoogleAuthManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -88,6 +91,53 @@ class RegisterViewModel(
                         it.copy(isLoading = false, errorMessage = error.message ?: "Something went wrong.")
                     }
                 }
+        }
+    }
+
+    fun signInWithGoogle(
+        googleAuthManager: GoogleAuthManager,
+        webClientId: String,
+        onSuccess: () -> Unit
+    ) {
+        if (_uiState.value.isLoading) return
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isLoading = true,
+                    errorMessage = null
+                )
+            }
+
+            try {
+                val idToken = googleAuthManager.getGoogleCreds(
+                    webClientId = webClientId
+                )
+
+                // TODO: POST /api/v1/auth/google
+                // authRepository.loginWithGoogle(idToken)
+                Log.d("GoogleAuth", "Google ID Token: $idToken")
+                Log.d("GoogleAuth", "Google Sign-In successful")
+
+                _uiState.update {
+                    it.copy(isLoading = false)
+                }
+
+                ApiService.auth.signInWithGoogleService(idToken)
+                // Panggil setelah autentikasi backend berhasil.
+                // onSuccess()
+
+            } catch (e: Exception) {
+                Log.e("GoogleAuth", "Google Sign-In failed", e)
+
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = e.message
+                            ?: "Google Sign-In failed."
+                    )
+                }
+            }
         }
     }
 
