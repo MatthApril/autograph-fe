@@ -1,7 +1,7 @@
 package com.example.autograph_fe.data.remote
 
 import com.example.autograph_fe.data.remote.dto.ApiErrorBody
-import com.example.autograph_fe.data.repository.AuthError
+import com.example.autograph_fe.data.repository.auth.AuthError
 import com.squareup.moshi.Moshi
 import retrofit2.HttpException
 import java.io.IOException

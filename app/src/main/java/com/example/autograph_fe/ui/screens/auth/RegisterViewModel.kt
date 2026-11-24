@@ -9,8 +9,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.autograph_fe.AutographApp
 import com.example.autograph_fe.data.remote.ApiService
-import com.example.autograph_fe.data.repository.AuthError
-import com.example.autograph_fe.data.repository.AuthRepository
+import com.example.autograph_fe.data.repository.auth.AuthError
+import com.example.autograph_fe.data.repository.auth.AuthRepository
 import com.example.autograph_fe.models.PendingVerification
 import com.example.autograph_fe.ui.auth.GoogleAuthManager
 import com.example.autograph_fe.ui.util.UiText

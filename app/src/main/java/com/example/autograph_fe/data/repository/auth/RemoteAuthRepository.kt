@@ -1,5 +1,6 @@
-package com.example.autograph_fe.data.repository
+package com.example.autograph_fe.data.repository.auth
 
+import com.example.autograph_fe.auth.SecureTokenStorage
 import com.example.autograph_fe.auth.TokenManager
 import com.example.autograph_fe.data.remote.ApiErrorParser
 import com.example.autograph_fe.data.remote.dto.ApiResponse
@@ -22,7 +23,7 @@ class RemoteAuthRepository(
 
     override suspend fun logIn(email: String, password: String): Result<User> = safeCall {
         val session = service.login(LoginRequest(email, password)).requireData()
-        tokenManager.saveTokens(session.accessToken, session.refreshToken)
+        tokenManager.saveTokens(accessToken = session.accessToken, refreshToken = session.refreshToken)
         session.user.toUser()
     }
 
@@ -36,7 +37,7 @@ class RemoteAuthRepository(
 
     override suspend fun verifyEmail(email: String, code: String): Result<User> = safeCall {
         val session = service.verifyEmail(VerifyEmailRequest(email, code)).requireData()
-        tokenManager.saveTokens(session.accessToken, session.refreshToken)
+        tokenManager.saveTokens(accessToken = session.accessToken, refreshToken = session.refreshToken)
         session.user.toUser()
     }
 

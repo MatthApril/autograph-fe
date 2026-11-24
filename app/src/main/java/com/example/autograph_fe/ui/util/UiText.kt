@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.autograph_fe.R
-import com.example.autograph_fe.data.repository.AuthError
+import com.example.autograph_fe.data.repository.auth.AuthError
 
 /** A message that's either our own string resource or plain text from the server. */
 sealed interface UiText {

@@ -1,7 +1,7 @@
 package com.example.autograph_fe
 
 import com.example.autograph_fe.data.remote.ApiErrorParser
-import com.example.autograph_fe.data.repository.AuthError
+import com.example.autograph_fe.data.repository.auth.AuthError
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.MediaType.Companion.toMediaType

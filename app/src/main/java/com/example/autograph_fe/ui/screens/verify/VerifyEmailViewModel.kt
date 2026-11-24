@@ -11,8 +11,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.toRoute
 import com.example.autograph_fe.AutographApp
 import com.example.autograph_fe.R
-import com.example.autograph_fe.data.repository.AuthError
-import com.example.autograph_fe.data.repository.AuthRepository
+import com.example.autograph_fe.data.repository.auth.AuthError
+import com.example.autograph_fe.data.repository.auth.AuthRepository
 import com.example.autograph_fe.models.User
 import com.example.autograph_fe.ui.components.OTP_LENGTH
 import com.example.autograph_fe.ui.navigation.Destination

@@ -1,35 +1,52 @@
 package com.example.autograph_fe.auth
 
-import android.content.Context
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.withContext
 
-private val Context.sessionDataStore by preferencesDataStore(name = "session")
+class TokenManager(
+    private val secureTokenStorage: SecureTokenStorage
+) {
 
-/** Keeps the session tokens on the phone so they survive closing the app. */
-class TokenManager(private val context: Context) {
+    private val _accessToken = MutableStateFlow<String?>(null)
 
-    private object Keys {
-        val ACCESS_TOKEN = stringPreferencesKey("access_token")
-        val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
+    val accessToken = _accessToken.asStateFlow()
+
+    fun getAccessToken(): String? {
+        return _accessToken.value
     }
 
-    val accessToken: Flow<String?> = context.sessionDataStore.data.map { it[Keys.ACCESS_TOKEN] }
+    suspend fun saveTokens(
+        accessToken: String,
+        refreshToken: String
+    ) {
+        // Simpan refresh token terlebih dahulu
+        withContext(Dispatchers.IO) {
+            secureTokenStorage.saveRefreshToken(refreshToken)
+        }
 
-    /** Logged in = a refresh token is saved. The access token expires every 15 minutes anyway. */
-    val isLoggedIn: Flow<Boolean> = context.sessionDataStore.data.map { it[Keys.REFRESH_TOKEN] != null }
+        // Simpan access token di RAM
+        _accessToken.value = accessToken
+    }
 
-    suspend fun saveTokens(accessToken: String, refreshToken: String) {
-        context.sessionDataStore.edit { prefs ->
-            prefs[Keys.ACCESS_TOKEN] = accessToken
-            prefs[Keys.REFRESH_TOKEN] = refreshToken
+    suspend fun getRefreshToken(): String? {
+        return withContext(Dispatchers.IO) {
+            secureTokenStorage.getRefreshToken()
         }
     }
 
+    suspend fun updateAccessToken(
+        accessToken: String
+    ) {
+        _accessToken.value = accessToken
+    }
+
     suspend fun clear() {
-        context.sessionDataStore.edit { it.clear() }
+        _accessToken.value = null
+
+        withContext(Dispatchers.IO) {
+            secureTokenStorage.clearRefreshToken()
+        }
     }
 }

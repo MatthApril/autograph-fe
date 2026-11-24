@@ -1,4 +1,4 @@
-package com.example.autograph_fe.data.repository
+package com.example.autograph_fe.data.repository.auth
 
 import com.example.autograph_fe.models.OtpTiming
 import com.example.autograph_fe.models.User
@@ -29,7 +29,14 @@ class FakeAuthRepository : AuthRepository {
     override suspend fun verifyEmail(email: String, code: String): Result<User> {
         delay(800)
         return when (code) {
-            "123456" -> Result.success(User(id = 1, name = "Maya", email = email, pictureUrl = null))
+            "123456" -> Result.success(
+                User(
+                    id = 1,
+                    name = "Maya",
+                    email = email,
+                    pictureUrl = null
+                )
+            )
             "000000" -> Result.failure(AuthError.Network)
             else -> Result.failure(AuthError.InvalidCode(attemptsLeft = 4))
         }

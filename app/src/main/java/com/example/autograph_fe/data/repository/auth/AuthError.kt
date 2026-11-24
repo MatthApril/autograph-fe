@@ -1,4 +1,4 @@
-package com.example.autograph_fe.data.repository
+package com.example.autograph_fe.data.repository.auth
 
 /** Every auth failure the app understands. ViewModels branch on these, never on message text. */
 sealed class AuthError : Exception() {

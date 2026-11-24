@@ -1,4 +1,4 @@
-package com.example.autograph_fe.data.repository
+package com.example.autograph_fe.data.repository.auth
 
 import com.example.autograph_fe.models.OtpTiming
 import com.example.autograph_fe.models.User

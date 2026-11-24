@@ -7,6 +7,6 @@ object ApiService {
         RetrofitClient.retrofit.create(AuthService::class.java)
     }
 
-    
+
 
 }

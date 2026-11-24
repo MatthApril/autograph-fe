@@ -14,21 +14,6 @@ data class EmailRequest(val email: String)
 data class LoginRequest(val email: String, val password: String)
 
 // Responses
-/** Every success response: { status, message, data } */
-data class ApiResponse<T>(
-    val status: Int,
-    val message: String?,
-    val data: T?,
-)
-
-/** Every error response: { status, code, message, data } */
-data class ApiErrorBody(
-    val status: Int?,
-    val code: String?,
-    val message: String?,
-    val data: Map<String, Any?>?,
-)
-
 data class OtpTimingDto(
     val email: String,
     @Json(name = "otp_expires_in") val otpExpiresIn: Int,
