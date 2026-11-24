@@ -15,6 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.autograph_fe.ui.screens.auth.LoginRoute
 import com.example.autograph_fe.ui.screens.auth.RegisterRoute
 import com.example.autograph_fe.ui.screens.onboarding.OnboardingRoute
+import com.example.autograph_fe.ui.screens.verify.VerifiedRoute
+import com.example.autograph_fe.ui.screens.verify.VerifyEmailRoute
 import com.example.autograph_fe.ui.screens.welcome.WelcomeScreen
 
 @Composable
@@ -62,11 +64,51 @@ fun AutographNavHost(
             RegisterRoute(
                 isDarkTheme = isDarkTheme,
                 onToggleTheme = onToggleTheme,
-                onRegistered = enterApp,
+                onVerificationNeeded = { pending ->
+                    // Forward, keeping Register underneath so its fields survive
+                    navController.navigate(
+                        Destination.VerifyEmail(
+                            email = pending.email,
+                            expiresInSeconds = pending.expiresInSeconds,
+                            resendInSeconds = pending.resendInSeconds,
+                            needsNewCode = pending.needsNewCode,
+                        )
+                    )
+                },
                 onBack = { navController.popBackStack() },
                 onLogIn = {
                     navController.navigate(Destination.Login) {
                         popUpTo(Destination.Register) { inclusive = true }
+                    }
+                },
+            )
+        }
+
+        composable<Destination.VerifyEmail> {
+            VerifyEmailRoute(
+                isDarkTheme = isDarkTheme,
+                onToggleTheme = onToggleTheme,
+                onVerified = { user ->
+                    navController.navigate(Destination.Verified(name = user.name)) {
+                        // Signed up and logged in: Welcome, Register and Verify are finished
+                        popUpTo(Destination.Welcome) { inclusive = true }
+                    }
+                },
+                onBackToRegister = {
+                    // Named target, so a fast double tap can't also pop Register
+                    navController.popBackStack(Destination.Register, inclusive = false)
+                },
+            )
+        }
+
+        composable<Destination.Verified> {
+            VerifiedRoute(
+                isDarkTheme = isDarkTheme,
+                onToggleTheme = onToggleTheme,
+                onContinue = {
+                    val next = if (hasSeenOnboarding) Destination.Home else Destination.Onboarding
+                    navController.navigate(next) {
+                        popUpTo(Destination.Verified) { inclusive = true }
                     }
                 },
             )

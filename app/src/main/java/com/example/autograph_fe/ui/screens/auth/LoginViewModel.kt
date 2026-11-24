@@ -11,6 +11,8 @@ import com.example.autograph_fe.AutographApp
 import com.example.autograph_fe.data.remote.ApiService
 import com.example.autograph_fe.data.repository.AuthRepository
 import com.example.autograph_fe.ui.auth.GoogleAuthManager
+import com.example.autograph_fe.ui.util.UiText
+import com.example.autograph_fe.ui.util.toUiText
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +25,7 @@ data class LoginUiState(
     @StringRes val emailError: Int? = null,
     @StringRes val passwordError: Int? = null,
     val isLoading: Boolean = false,
-    val errorMessage: String? = null,
+    val errorMessage: UiText? = null,
 )
 
 class LoginViewModel(
@@ -86,8 +88,7 @@ class LoginViewModel(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = error.message
-                                ?: "Something went wrong."
+                            errorMessage = error.toUiText()
                         )
                     }
                 }
@@ -133,8 +134,7 @@ class LoginViewModel(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        errorMessage = e.message
-                            ?: "Google Sign-In failed."
+                        errorMessage = UiText.Plain(e.message ?: "Google Sign-In failed.")
                     )
                 }
             }

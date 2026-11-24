@@ -10,7 +10,8 @@
 
     <!-- Auth -->
     <string name="google_web_client_id">277378609914-7hburp6rq331l4hq52df0cfkhvpmbts7.apps.googleusercontent.com</string>
-    <string name="api_base_url">http://172.23.192.1:3000/api/</string>
+<!--    <string name="api_base_url">http://172.23.192.1:3000/api/</string>-->
+    <string name="api_base_url">http://127.0.0.1:3001/api/</string>
     <string name="onboarding_1_eyebrow">Capture</string>
     <string name="onboarding_1_title">Every thought,\nin one place</string>
     <string name="onboarding_1_body">Write, sketch, and dictate on one continuous page. Autograph keeps every idea together.</string>
@@ -66,4 +67,39 @@
     <string name="strength_weak">Weak</string>
     <string name="strength_good">Good</string>
     <string name="strength_strong">Strong</string>
+
+    <!-- Email verification -->
+    <string name="otp_input_description">Verification code, %1$d of %2$d digits entered</string>
+    <string name="verify_top_title">Verify your email</string>
+    <string name="verify_title">Check your email</string>
+    <string name="verify_subtitle">We sent a 6-digit code to</string>
+    <string name="verify_change_email">Wrong email? Change it</string>
+    <string name="verify_button">Verify</string>
+    <string name="otp_send_new_code">Send a new code</string>
+    <string name="otp_expires_in">Code expires in</string>
+    <string name="otp_expired">This code has expired</string>
+    <string name="otp_didnt_get_it">Didn\'t get it?</string>
+    <string name="otp_resend_in">Resend in %1$s</string>
+    <string name="otp_resend">Resend code</string>
+    <string name="otp_sending">Sending…</string>
+    <string name="otp_spam_hint">Can\'t find it? Check your spam or promotions folder.</string>
+    <string name="otp_error_invalid">That code isn\'t right. Try again.</string>
+    <string name="otp_toast_sent">New code sent to %1$s</string>
+    <string name="leave_title">Leave verification?</string>
+    <string name="leave_message">You\'ll need to sign up again if the code expires.</string>
+    <string name="leave_stay">Stay</string>
+    <string name="leave_leave">Leave</string>
+    <string name="timed_out_title">Sign-up timed out</string>
+    <string name="otp_timed_out_message">Your sign-up timed out. Please create your account again.</string>
+    <string name="otp_too_many_attempts_message">Too many wrong codes. Please create your account again.</string>
+    <string name="start_over">Start over</string>
+    <string name="error_network">Couldn\'t connect. Check your internet and try again.</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="error_invalid_credentials">Incorrect email or password.</string>
+    <string name="error_email_taken">An account with this email already exists.</string>
+
+    <string name="verified_eyebrow">Verified</string>
+    <string name="verified_title">You\'re all set, %1$s</string>
+    <string name="verified_title_no_name">You\'re all set</string>
+    <string name="verified_body">Your email is confirmed. Let\'s take a quick look at what Autograph can do.</string>
 </resources>

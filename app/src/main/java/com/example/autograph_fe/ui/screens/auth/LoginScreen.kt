@@ -32,7 +32,9 @@ import com.example.autograph_fe.ui.auth.GoogleAuthManager
 import com.example.autograph_fe.ui.components.AutographButton
 import com.example.autograph_fe.ui.components.AutographTextField
 import com.example.autograph_fe.ui.components.FormErrorBanner
+import com.example.autograph_fe.ui.components.TextLink
 import com.example.autograph_fe.ui.theme.AutographTheme
+import com.example.autograph_fe.ui.util.asString
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.remember
 
@@ -153,7 +155,7 @@ fun LoginScreen(
 
             if (uiState.errorMessage != null) {
                 Spacer(Modifier.height(12.dp))
-                FormErrorBanner(message = uiState.errorMessage)
+                FormErrorBanner(message = uiState.errorMessage.asString())
             }
 
             Spacer(Modifier.height(16.dp))
