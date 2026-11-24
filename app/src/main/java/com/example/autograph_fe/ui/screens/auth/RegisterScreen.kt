@@ -30,17 +30,19 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.autograph_fe.R
+import com.example.autograph_fe.models.PendingVerification
 import com.example.autograph_fe.ui.auth.GoogleAuthManager
 import com.example.autograph_fe.ui.components.AutographButton
 import com.example.autograph_fe.ui.components.AutographTextField
 import com.example.autograph_fe.ui.components.FormErrorBanner
 import com.example.autograph_fe.ui.theme.AutographTheme
+import com.example.autograph_fe.ui.util.asString
 
 @Composable
 fun RegisterRoute(
     isDarkTheme: Boolean,
     onToggleTheme: () -> Unit,
-    onRegistered: () -> Unit,
+    onVerificationNeeded: (PendingVerification) -> Unit,
     onBack: () -> Unit,
     onLogIn: () -> Unit,
     viewModel: RegisterViewModel = viewModel(factory = RegisterViewModel.Factory),
@@ -62,12 +64,13 @@ fun RegisterRoute(
         onPasswordChange = viewModel::onPasswordChange,
         onConfirmPasswordChange = viewModel::onConfirmPasswordChange,
         onAcceptedTermsChange = viewModel::onAcceptedTermsChange,
-        onRegisterClick = { viewModel.register(onSuccess = onRegistered) },
+        onRegisterClick = { viewModel.register(onVerificationNeeded) },
         onGoogleClick = {
             viewModel.signInWithGoogle(
                 googleAuthManager = googleAuthManager,
                 webClientId = webClientId,
-                onSuccess = onRegistered
+                // Not called yet: Google sign-in still has no session from the server (PDF G.4)
+                onSuccess = {}
             )
         },
         onBack = onBack,
@@ -186,7 +189,7 @@ fun RegisterScreen(
 
             if (uiState.errorMessage != null) {
                 Spacer(Modifier.height(12.dp))
-                FormErrorBanner(message = uiState.errorMessage)
+                FormErrorBanner(message = uiState.errorMessage.asString())
             }
 
             Spacer(Modifier.height(16.dp))

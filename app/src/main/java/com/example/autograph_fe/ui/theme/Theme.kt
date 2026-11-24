@@ -17,6 +17,7 @@ private val LightColors = lightColorScheme(
     surface = Color.White,      onSurface = Ink,
     onSurfaceVariant = InkMuted,
     outline = PaperLine,
+    error = Danger,             errorContainer = DangerSoft,
 )
 
 private val DarkColors = darkColorScheme(
@@ -25,6 +26,7 @@ private val DarkColors = darkColorScheme(
     surface = NightSurface,     onSurface = Moon,
     onSurfaceVariant = MoonMuted,
     outline = NightLine,
+    error = DangerLight,        errorContainer = DangerDeep,
 )
 
 @Immutable

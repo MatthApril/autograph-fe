@@ -5,7 +5,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -40,6 +39,7 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.autograph_fe.R
+import com.example.autograph_fe.ui.components.TextLink
 import com.example.autograph_fe.ui.components.ThemeToggleButton
 import com.example.autograph_fe.ui.theme.AutographTheme
 
@@ -222,18 +222,6 @@ fun PasswordStrengthMeter(strength: Int, modifier: Modifier = Modifier) {
             color = color,
         )
     }
-}
-
-@Composable
-fun TextLink(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.labelMedium,
-        color = AutographTheme.extraColors.link,
-        modifier = modifier
-            .clickable(role = Role.Button, onClick = onClick)
-            .padding(vertical = 6.dp, horizontal = 2.dp),   // a bigger tap target than the text itself
-    )
 }
 
 @Composable

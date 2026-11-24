@@ -20,6 +20,8 @@ val AutographTypography = Typography(
     displaySmall   = TextStyle(fontFamily = SourceSerif, fontWeight = FontWeight.Medium, fontSize = 31.sp, lineHeight = 36.sp),   // Welcome
     headlineLarge  = TextStyle(fontFamily = SourceSerif, fontWeight = FontWeight.Medium, fontSize = 30.sp, lineHeight = 31.5.sp, letterSpacing = (-0.6).sp), // Onboarding
     headlineMedium = TextStyle(fontFamily = SourceSerif, fontWeight = FontWeight.Medium, fontSize = 27.sp, lineHeight = 32.sp),   // Login, Register
+    titleMedium    = TextStyle(fontFamily = SourceSerif, fontWeight = FontWeight.Medium, fontSize = 21.sp, lineHeight = 28.sp),   // Dialog titles
+    headlineSmall  = TextStyle(fontFamily = Inter, fontWeight = FontWeight.SemiBold, fontSize = 24.sp, lineHeight = 36.sp),       // OTP digits
     // Inter
     titleLarge  = TextStyle(fontFamily = Inter, fontWeight = FontWeight.Bold, fontSize = 21.sp),                          // Logo wordmark
     titleSmall  = TextStyle(fontFamily = Inter, fontWeight = FontWeight.SemiBold, fontSize = 14.sp, lineHeight = 21.sp),  // Top bar title

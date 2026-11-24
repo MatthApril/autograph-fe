@@ -56,13 +56,19 @@ fun AutographButton(
 
     when (variant) {
         ButtonVariant.Primary -> Button(
-            onClick = onClick,
-            enabled = isClickable,
+            // Stays enabled while loading so it keeps its color; taps are ignored instead
+            onClick = { if (!isLoading) onClick() },
+            enabled = enabled,
+            colors = ButtonDefaults.buttonColors(
+                // The mockup's disabled look: the normal indigo, faded, not Material's gray
+                disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.45f),
+                disabledContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
             modifier = sized.dropShadow(
                 shape = RoundedCornerShape(50),
                 shadow = Shadow(
                     radius = 22.dp,
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = if (isClickable) 0.22f else 0f),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = if (enabled) 0.22f else 0f),
                     offset = DpOffset(0.dp, 8.dp),
                 ),
             ),

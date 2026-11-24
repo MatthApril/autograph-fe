@@ -22,3 +22,8 @@ val GreenLight = Color(0xFF65BC8F)   // success, dark
 val Amber      = Color(0xFFF2B84B)   // accent dots and pencil icon
 val HaloLight  = Color(0xFFE8EBFF)   // onboarding halo, light
 val HaloDark   = Color(0xFF303754)   // onboarding halo, dark
+
+val Danger      = Color(0xFFD64545)  // errors, light (measured from the mockup)
+val DangerSoft  = Color(0xFFFCF0F0)  // error banner background, light (measured)
+val DangerLight = Color(0xFFF08A8A)  // errors, dark (the mockup has no dark error state)
+val DangerDeep  = Color(0xFF3B2326)  // error banner background, dark

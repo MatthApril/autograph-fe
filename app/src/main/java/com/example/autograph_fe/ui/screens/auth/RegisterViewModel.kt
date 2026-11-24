@@ -9,8 +9,12 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.autograph_fe.AutographApp
 import com.example.autograph_fe.data.remote.ApiService
+import com.example.autograph_fe.data.repository.AuthError
 import com.example.autograph_fe.data.repository.AuthRepository
+import com.example.autograph_fe.models.PendingVerification
 import com.example.autograph_fe.ui.auth.GoogleAuthManager
+import com.example.autograph_fe.ui.util.UiText
+import com.example.autograph_fe.ui.util.toUiText
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,7 +33,7 @@ data class RegisterUiState(
     val acceptedTerms: Boolean = false,
     val termsError: Boolean = false,
     val isLoading: Boolean = false,
-    val errorMessage: String? = null,
+    val errorMessage: UiText? = null,
 ) {
     val passwordStrength: Int get() = AuthValidator.passwordStrength(password)
 }
@@ -56,7 +60,7 @@ class RegisterViewModel(
     fun onAcceptedTermsChange(value: Boolean) =
         _uiState.update { it.copy(acceptedTerms = value, termsError = false) }
 
-    fun register(onSuccess: () -> Unit) {
+    fun register(onVerificationNeeded: (PendingVerification) -> Unit) {
         val state = _uiState.value
         if (state.isLoading) return
 
@@ -79,16 +83,36 @@ class RegisterViewModel(
             return
         }
 
+        val email = state.email.trim().lowercase()     // the server lowercases too
+
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-            authRepository.register(state.name.trim(), state.email.trim(), state.password)
-                .onSuccess {
+            authRepository.register(state.name.trim(), email, state.password)
+                .onSuccess { timing ->
                     _uiState.update { it.copy(isLoading = false) }
-                    onSuccess()
+                    onVerificationNeeded(
+                        PendingVerification(
+                            email = timing.email,
+                            expiresInSeconds = timing.expiresInSeconds,
+                            resendInSeconds = timing.resendInSeconds,
+                            needsNewCode = false,
+                        )
+                    )
                 }
                 .onFailure { error ->
-                    _uiState.update {
-                        it.copy(isLoading = false, errorMessage = error.message ?: "Something went wrong.")
+                    _uiState.update { it.copy(isLoading = false) }
+                    if (error is AuthError.VerificationPending) {
+                        // A sign-up for this email is already waiting: verify it instead of failing
+                        onVerificationNeeded(
+                            PendingVerification(
+                                email = email,
+                                expiresInSeconds = CODE_LIFETIME_SECONDS,
+                                resendInSeconds = CODE_LIFETIME_SECONDS,
+                                needsNewCode = true,
+                            )
+                        )
+                    } else {
+                        _uiState.update { it.copy(errorMessage = error.toUiText()) }
                     }
                 }
         }
@@ -133,8 +157,7 @@ class RegisterViewModel(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        errorMessage = e.message
-                            ?: "Google Sign-In failed."
+                        errorMessage = UiText.Plain(e.message ?: "Google Sign-In failed.")
                     )
                 }
             }
@@ -142,6 +165,8 @@ class RegisterViewModel(
     }
 
     companion object {
+        const val CODE_LIFETIME_SECONDS = 60   // matches OTP_TTL_SECONDS on the server
+
         val Factory = viewModelFactory {
             initializer {
                 val app = this[APPLICATION_KEY] as AutographApp
