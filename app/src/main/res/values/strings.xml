@@ -11,7 +11,7 @@
     <!-- Auth -->
     <string name="google_web_client_id">277378609914-7hburp6rq331l4hq52df0cfkhvpmbts7.apps.googleusercontent.com</string>
 <!--    <string name="api_base_url">http://172.23.192.1:3000/api/</string>-->
-    <string name="api_base_url">http://192.168.1.10:3000/api/</string>
+    <string name="api_base_url">https://autograph-dev-backend-1085467429695.asia-southeast2.run.app/api/</string>
     <string name="onboarding_1_eyebrow">Capture</string>
     <string name="onboarding_1_title">Every thought,\nin one place</string>
     <string name="onboarding_1_body">Write, sketch, and dictate on one continuous page. Autograph keeps every idea together.</string>
