@@ -37,6 +37,7 @@ import com.example.autograph_fe.ui.theme.AutographTheme
 import com.example.autograph_fe.ui.util.asString
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.remember
+import com.example.autograph_fe.BuildConfig
 
 @Composable
 fun LoginRoute(
@@ -56,7 +57,7 @@ fun LoginRoute(
         GoogleAuthManager(context as Activity)
     }
 
-    val webClientId = stringResource(R.string.google_web_client_id)
+    val webClientId = BuildConfig.GOOGLE_WEB_CLIENT_ID
 
     LoginScreen(
         uiState = uiState,

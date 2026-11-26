@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.autograph_fe.BuildConfig
 import com.example.autograph_fe.R
 import com.example.autograph_fe.models.PendingVerification
 import com.example.autograph_fe.ui.auth.GoogleAuthManager
@@ -53,7 +54,7 @@ fun RegisterRoute(
         GoogleAuthManager(context as Activity)
     }
 
-    val webClientId = stringResource(R.string.google_web_client_id)
+    val webClientId = BuildConfig.GOOGLE_WEB_CLIENT_ID
 
     RegisterScreen(
         uiState = uiState,

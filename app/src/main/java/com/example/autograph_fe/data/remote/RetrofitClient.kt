@@ -1,6 +1,7 @@
 package com.example.autograph_fe.data.remote
 
 import android.content.Context
+import com.example.autograph_fe.BuildConfig
 import com.example.autograph_fe.R
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -21,7 +22,7 @@ object RetrofitClient {
         if (::retrofitInstance.isInitialized) return
 
         retrofitInstance = Retrofit.Builder()
-            .baseUrl(context.getString(R.string.api_base_url))
+            .baseUrl(BuildConfig.API_BASE_URL)
             .addConverterFactory(
                 MoshiConverterFactory.create(moshi)
             )
